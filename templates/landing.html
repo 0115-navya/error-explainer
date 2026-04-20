@@ -46,13 +46,17 @@
         <div class="card p-4">
             <h5 class="mb-3 fw-bold">📋 Paste Your Error Below</h5>
             <p class="text-muted mb-3" style="font-size:0.9rem">Try it now — paste any error message or stack trace</p>
-            <form action="/login/" method="GET">
-                <textarea name="next" class="form-control mb-3" rows="6"
-                    placeholder="Example:&#10;Traceback (most recent call last):&#10;  File 'app.py', line 5&#10;IndexError: list index out of range"></textarea>
-                <button type="submit" class="btn btn-primary w-100 py-2" style="font-size:1.05rem;">
-                    ⚡ Explain This Error — Login to Continue
-                </button>
-            </form>
+            <div class="text-center mt-3">
+    <p class="text-muted mb-3" style="font-size:0.95rem">
+        👆 Login or create a free account to explain your errors and save history
+    </p>
+    <a href="/register/" class="btn btn-primary px-5 py-2 me-2" style="font-size:1.05rem;">
+        🚀 Get Started Free
+    </a>
+    <a href="/login/" class="btn btn-outline-light px-4 py-2" style="font-size:1.05rem;">
+        Login →
+    </a>
+</div>
             <p class="text-center mt-3 text-muted" style="font-size:0.85rem">
                 Already have an account? <a href="/login/" style="color:#58a6ff">Login here</a> · 
                 New here? <a href="/register/" style="color:#58a6ff">Create free account</a>
