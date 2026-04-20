@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- Hero Section — only show when no explanation yet -->
+{% if not explanation %}
+<div class="text-center mb-5 mt-3">
+    <div style="font-size: 3.5rem;">💻</div>
+    <h1 class="fw-bold mt-2" style="color:#58a6ff; font-size:2.2rem;">Error Explainer</h1>
+    <p class="text-muted mt-2" style="font-size:1.1rem; max-width:600px; margin:0 auto;">
+        Paste any programming error and get an instant, plain English explanation — no jargon, no confusion.
+    </p>
+
+    <!-- Feature Cards -->
+    <div class="row justify-content-center mt-4 g-3">
+        <div class="col-md-3">
+            <div class="card p-3 text-center h-100">
+                <div style="font-size:2rem">⚡</div>
+                <h6 class="mt-2 fw-bold">Instant Explanation</h6>
+                <p class="text-muted" style="font-size:0.85rem">Get a clear breakdown of any error in seconds</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card p-3 text-center h-100">
+                <div style="font-size:2rem">🌐</div>
+                <h6 class="mt-2 fw-bold">Any Language</h6>
+                <p class="text-muted" style="font-size:0.85rem">Python, JavaScript, Java, PHP and more</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card p-3 text-center h-100">
+                <div style="font-size:2rem">🔧</div>
+                <h6 class="mt-2 fw-bold">Step-by-Step Fix</h6>
+                <p class="text-muted" style="font-size:0.85rem">Get exact code fixes, not just explanations</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card p-3 text-center h-100">
+                <div style="font-size:2rem">📜</div>
+                <h6 class="mt-2 fw-bold">Save History</h6>
+                <p class="text-muted" style="font-size:0.85rem">All your past errors saved in one place</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Main Input Card -->
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card p-4 mb-4">
+            <h5 class="mb-3 fw-bold">📋 Paste Your Error Below</h5>
+            <p class="text-muted mb-3" style="font-size:0.9rem">Copy the error message or stack trace from your terminal or browser console and paste it here.</p>
+            <form method="POST">
+                {% csrf_token %}
+                <textarea name="error_text" class="form-control mb-3" rows="8"
+                    placeholder="Example:&#10;Traceback (most recent call last):&#10;  File 'app.py', line 5&#10;IndexError: list index out of range">{{ error_text }}</textarea>
+                <button type="submit" class="btn btn-primary w-100 py-2" style="font-size:1.05rem;">
+                    ⚡ Explain This Error
+                </button>
+            </form>
+        </div>
+
+        <!-- AI Result -->
+        {% if explanation %}
+        <div class="card p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-bold mb-0">🤖 AI Explanation</h5>
+                <div class="d-flex gap-2">
+                    <span class="badge bg-info">{{ language }}</span>
+                    <span class="badge {% if severity == 'Critical' %}bg-danger{% elif severity == 'Warning' %}bg-warning text-dark{% else %}bg-secondary{% endif %}">
+                        {{ severity }}
+                    </span>
+                </div>
+            </div>
+            <hr style="border-color:#30363d">
+            <div id="explanation-text" style="line-height:1.8; font-size:0.95rem;">
+                {{ explanation|linebreaks }}
+            </div>
+            <div class="d-flex gap-2 mt-3">
+                <button onclick="copyText()" class="btn btn-outline-light btn-sm">📋 Copy Explanation</button>
+                <a href="/" class="btn btn-outline-secondary btn-sm">🔄 Explain Another</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+document.querySelector('form').addEventListener('submit', function() {
+    const btn = document.querySelector('button[type="submit"]');
+    const textarea = document.querySelector('textarea');
+    if (!textarea.value.trim()) return;
+    btn.disabled = true;
+    btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status"></span> AI is analyzing your error...`;
+    textarea.setAttribute('readonly', true);
+});
+
+function copyText() {
+    const text = document.getElementById('explanation-text').innerText;
+    navigator.clipboard.writeText(text);
+    event.target.innerHTML = '✅ Copied!';
+    setTimeout(() => event.target.innerHTML = '📋 Copy Explanation', 2000);
+}
+</script>
+{% endblock %}

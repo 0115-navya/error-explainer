@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center mt-3">
+    <div class="col-md-10">
+        <div class="row g-4 align-items-center">
+
+            <!-- Left side -->
+            <div class="col-md-6">
+                <div style="font-size:3rem">🔍</div>
+                <h2 class="fw-bold mt-2" style="color:#58a6ff">Join Error Explainer</h2>
+                <p class="text-muted mt-2">Create a free account and never get stuck on an error again.</p>
+                <div class="card p-3 mt-4" style="border-color:#238636">
+                    <p class="mb-2 fw-bold" style="color:#2ea043">✅ Everything is free</p>
+                    <ul class="text-muted mb-0" style="font-size:0.9rem; padding-left:1.2rem">
+                        <li>Unlimited error explanations</li>
+                        <li>Full error history saved</li>
+                        <li>Works for all programming languages</li>
+                        <li>AI-powered fixes with code examples</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right side — register form -->
+            <div class="col-md-6">
+                <div class="card p-4">
+                    <h4 class="mb-1 fw-bold text-center">Create Account 🚀</h4>
+                    <p class="text-muted text-center mb-4" style="font-size:0.9rem">Takes less than 30 seconds</p>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <label class="form-label text-muted" style="font-size:0.85rem">Username</label>
+                        <input type="text" name="username" class="form-control mb-3" placeholder="Choose a username">
+                        <label class="form-label text-muted" style="font-size:0.85rem">Email</label>
+                        <input type="email" name="email" class="form-control mb-3" placeholder="your@email.com">
+                        <label class="form-label text-muted" style="font-size:0.85rem">Password</label>
+                        <input type="password" name="password" class="form-control mb-4" placeholder="Create a password">
+                        <button type="submit" class="btn btn-primary w-100 py-2">Create Free Account →</button>
+                    </form>
+                    <p class="text-center mt-3 text-muted" style="font-size:0.9rem">
+                        Already have an account? <a href="/login/" style="color:#58a6ff">Login here</a>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<h4 class="mb-4">📜 My Error History</h4>
+{% if errors %}
+    {% for error in errors %}
+    <div class="card p-4 mb-3">
+        <div class="d-flex justify-content-between mb-2">
+            <span class="badge bg-info">{{ error.language }}</span>
+            <span class="badge {% if error.severity == 'Critical' %}bg-danger{% elif error.severity == 'Warning' %}bg-warning{% else %}bg-secondary{% endif %}">
+                {{ error.severity }}
+            </span>
+            <small class="text-muted">{{ error.created_at|date:"M d, Y H:i" }}</small>
+        </div>
+        <p class="text-muted mb-2"><strong>Error:</strong> {{ error.error_text|truncatechars:100 }}</p>
+        <p><strong>Explanation:</strong> {{ error.explanation|truncatechars:200 }}</p>
+    </div>
+    {% endfor %}
+{% else %}
+    <div class="card p-4 text-center">
+        <p>No errors explained yet! <a href="/">Explain your first error</a></p>
+    </div>
+{% endif %}
+{% endblock %}
